@@ -6,6 +6,7 @@ from ui.scoreboard_form import Ui_Scoreboard
 
 from score_widget import ScoreWidget
 from add_widget import AddWidget
+from get_score_widget import GetScoreWidget
 
 class ScoreBoard(QMainWindow, Ui_Scoreboard):
     def __init__(self):
@@ -36,7 +37,11 @@ class ScoreBoard(QMainWindow, Ui_Scoreboard):
         for name in db_tool.getnames():
             widget = ScoreWidget()
             self.verticalLayout.addWidget(widget)
-            widget.set_name(name)        
+            widget.set_name(name)   
+            
+        widget = GetScoreWidget()
+        self.verticalLayout.addWidget(widget)
+        
             
     def add_member(self):
         # 위젯 뛰우고 현재 메인 윈도우는 컨트롤 못하게 하기
