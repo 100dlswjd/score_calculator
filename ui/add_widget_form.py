@@ -39,10 +39,21 @@ class Ui_add_form(object):
 
         self.horizontalLayout.addItem(self.horizontalSpacer)
 
-        self.pushButton = QPushButton(add_form)
-        self.pushButton.setObjectName(u"pushButton")
+        self.pushButton_add = QPushButton(add_form)
+        self.pushButton_add.setObjectName(u"pushButton_add")
+        sizePolicy = QSizePolicy(QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Minimum)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.pushButton_add.sizePolicy().hasHeightForWidth())
+        self.pushButton_add.setSizePolicy(sizePolicy)
+        self.pushButton_add.setStyleSheet(u"QPushButton{\n"
+"border:1px solid #fdffa0;\n"
+"border-radius:4px;\n"
+"background-color : #ff8a2b;\n"
+"color : #3e4bff;\n"
+"}")
 
-        self.horizontalLayout.addWidget(self.pushButton)
+        self.horizontalLayout.addWidget(self.pushButton_add)
 
         self.horizontalSpacer_2 = QSpacerItem(40, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
 
@@ -60,6 +71,6 @@ class Ui_add_form(object):
     def retranslateUi(self, add_form):
         add_form.setWindowTitle(QCoreApplication.translate("add_form", u"Form", None))
         self.lineEdit.setPlaceholderText(QCoreApplication.translate("add_form", u"\uc774\ub984 \ub610\ub294 \ubcc4\uba85\uc744 \uc801\uc5b4\uc8fc\uc138\uc694", None))
-        self.pushButton.setText(QCoreApplication.translate("add_form", u"\uc0ac\uc6a9\uc790 \ucd94\uac00", None))
+        self.pushButton_add.setText(QCoreApplication.translate("add_form", u"\uc0ac\uc6a9\uc790 \ucd94\uac00", None))
     # retranslateUi
 

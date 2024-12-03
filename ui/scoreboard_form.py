@@ -23,11 +23,15 @@ class Ui_Scoreboard(object):
     def setupUi(self, Scoreboard):
         if not Scoreboard.objectName():
             Scoreboard.setObjectName(u"Scoreboard")
-        Scoreboard.resize(229, 121)
+        Scoreboard.resize(250, 109)
+        Scoreboard.setMinimumSize(QSize(250, 0))
+        Scoreboard.setMaximumSize(QSize(250, 16777215))
         self.centralwidget = QWidget(Scoreboard)
         self.centralwidget.setObjectName(u"centralwidget")
         self.verticalLayout = QVBoxLayout(self.centralwidget)
+        self.verticalLayout.setSpacing(4)
         self.verticalLayout.setObjectName(u"verticalLayout")
+        self.verticalLayout.setContentsMargins(4, 4, 4, 4)
         self.comboBox_site = QComboBox(self.centralwidget)
         self.comboBox_site.setObjectName(u"comboBox_site")
 
@@ -40,10 +44,10 @@ class Ui_Scoreboard(object):
 
         self.horizontalLayout.addItem(self.horizontalSpacer)
 
-        self.pushButton = QPushButton(self.centralwidget)
-        self.pushButton.setObjectName(u"pushButton")
+        self.pushButton_add_member = QPushButton(self.centralwidget)
+        self.pushButton_add_member.setObjectName(u"pushButton_add_member")
 
-        self.horizontalLayout.addWidget(self.pushButton)
+        self.horizontalLayout.addWidget(self.pushButton_add_member)
 
 
         self.verticalLayout.addLayout(self.horizontalLayout)
@@ -51,7 +55,7 @@ class Ui_Scoreboard(object):
         Scoreboard.setCentralWidget(self.centralwidget)
         self.menubar = QMenuBar(Scoreboard)
         self.menubar.setObjectName(u"menubar")
-        self.menubar.setGeometry(QRect(0, 0, 229, 22))
+        self.menubar.setGeometry(QRect(0, 0, 250, 22))
         Scoreboard.setMenuBar(self.menubar)
         self.statusbar = QStatusBar(Scoreboard)
         self.statusbar.setObjectName(u"statusbar")
@@ -64,6 +68,6 @@ class Ui_Scoreboard(object):
 
     def retranslateUi(self, Scoreboard):
         Scoreboard.setWindowTitle(QCoreApplication.translate("Scoreboard", u"Scoreboard", None))
-        self.pushButton.setText(QCoreApplication.translate("Scoreboard", u"\uc0ac\uc6a9\uc790 \ucd94\uac00", None))
+        self.pushButton_add_member.setText(QCoreApplication.translate("Scoreboard", u"\uc0ac\uc6a9\uc790 \ucd94\uac00", None))
     # retranslateUi
 
