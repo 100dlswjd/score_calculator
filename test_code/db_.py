@@ -42,17 +42,19 @@ rows = cur.fetchall()
 my = 0
 
 get_list = []
+data_list = []
 
 for row in rows:
     row = row[3:]
     get_list.append(row)
+    data_list.append(0)
     
-# 0번 인덱스와 1번인덱스가 둘다 None이 아닌경우
-for i in range(len(get_list)):
-    if get_list[i][0] != None and get_list[i][1] != None:
-        print(get_list[i])
-        
-    
+for data in get_list:
+    for i in range(len(data)):
+        if data[i] is not None:
+            print(f"{names[i]}: {data[i]}")
+            data_list[i] += data[i]
+    print("--------------------")
 
 
 con.commit()
