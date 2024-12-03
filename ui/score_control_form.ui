@@ -33,7 +33,7 @@
     <number>0</number>
    </property>
    <item>
-    <widget class="QPushButton" name="pushButton_get_score_2">
+    <widget class="QPushButton" name="pushButton_insert_score">
      <property name="sizePolicy">
       <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
        <horstretch>0</horstretch>

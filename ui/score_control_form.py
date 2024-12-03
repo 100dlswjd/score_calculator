@@ -27,15 +27,15 @@ class Ui_score_control_form(object):
         self.horizontalLayout = QHBoxLayout(score_control_form)
         self.horizontalLayout.setObjectName(u"horizontalLayout")
         self.horizontalLayout.setContentsMargins(0, 0, 0, 0)
-        self.pushButton_get_score_2 = QPushButton(score_control_form)
-        self.pushButton_get_score_2.setObjectName(u"pushButton_get_score_2")
+        self.pushButton_insert_score = QPushButton(score_control_form)
+        self.pushButton_insert_score.setObjectName(u"pushButton_insert_score")
         sizePolicy = QSizePolicy(QSizePolicy.Policy.Maximum, QSizePolicy.Policy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.pushButton_get_score_2.sizePolicy().hasHeightForWidth())
-        self.pushButton_get_score_2.setSizePolicy(sizePolicy)
+        sizePolicy.setHeightForWidth(self.pushButton_insert_score.sizePolicy().hasHeightForWidth())
+        self.pushButton_insert_score.setSizePolicy(sizePolicy)
 
-        self.horizontalLayout.addWidget(self.pushButton_get_score_2)
+        self.horizontalLayout.addWidget(self.pushButton_insert_score)
 
         self.pushButton_get_score = QPushButton(score_control_form)
         self.pushButton_get_score.setObjectName(u"pushButton_get_score")
@@ -52,7 +52,7 @@ class Ui_score_control_form(object):
 
     def retranslateUi(self, score_control_form):
         score_control_form.setWindowTitle(QCoreApplication.translate("score_control_form", u"Form", None))
-        self.pushButton_get_score_2.setText(QCoreApplication.translate("score_control_form", u"\ub370\uc774\ud130 \ucd94\uac00", None))
+        self.pushButton_insert_score.setText(QCoreApplication.translate("score_control_form", u"\ub370\uc774\ud130 \ucd94\uac00", None))
         self.pushButton_get_score.setText(QCoreApplication.translate("score_control_form", u"\ubaa8\ub4e0 \uc804\uc801 \uac00\uc838\uc624\uae30", None))
     # retranslateUi
 
