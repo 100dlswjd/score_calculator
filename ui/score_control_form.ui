@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>get_score_form</class>
- <widget class="QWidget" name="get_score_form">
+ <class>score_control_form</class>
+ <widget class="QWidget" name="score_control_form">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -19,7 +19,7 @@
   <property name="windowTitle">
    <string>Form</string>
   </property>
-  <layout class="QVBoxLayout" name="verticalLayout">
+  <layout class="QHBoxLayout" name="horizontalLayout">
    <property name="leftMargin">
     <number>0</number>
    </property>
@@ -33,9 +33,28 @@
     <number>0</number>
    </property>
    <item>
-    <widget class="QPushButton" name="pushButton_get_score">
+    <widget class="QPushButton" name="pushButton_get_score_2">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
      <property name="text">
-      <string>모든 전적 가져와서 클립보드에 복사</string>
+      <string>데이터 추가</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QPushButton" name="pushButton_get_score">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="text">
+      <string>모든 전적 가져오기</string>
      </property>
     </widget>
    </item>

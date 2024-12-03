@@ -1,9 +1,9 @@
 from PySide6.QtWidgets import QApplication, QWidget
 
 
-from ui.get_score_widget_form import Ui_get_score_form
+from ui.score_control_form import Ui_score_control_form
 
-class GetScoreWidget(QWidget, Ui_get_score_form):
+class ScoreControlWidget(QWidget, Ui_score_control_form):
     def __init__(self):
         super().__init__()
         self.setupUi(self)
