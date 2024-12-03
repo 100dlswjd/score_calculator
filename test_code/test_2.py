@@ -49,17 +49,20 @@ for col1, col2 in combinations(range(num_columns), 2):
 
 current_col1 = None
 # Step 5: Print cumulative values for each valid pair
-for pair, cumulative_value in cumulative_sums.items():
-    
-    col1 = pair.split('_')[0]
-    if current_col1 is None or current_col1 != col1:
-        print(f"============== {col1} ==============")
-        current_col1 = col1
-        
-    if cumulative_value['valid']:
-        print(f"역대 전적 {pair}: {str(pair).split('_')[0]} = {cumulative_value['cumulative1']}, {str(pair).split('_')[1]} = {cumulative_value['cumulative2']}")
-    else:
-        print(f"전적 결과 없음 {pair}")
+for col1 in range(num_columns):
+    col_name1 = column_names[col1]
+    print(f"============== Cumulative comparisons for: {col_name1} ==============")
+    for col2 in range(num_columns):
+        if col1 != col2:
+            col_name2 = column_names[col2]
+            pair_key = f"{col_name1}_{col_name2}" if f"{col_name1}_{col_name2}" in cumulative_sums else f"{col_name2}_{col_name1}"
 
+            if pair_key in cumulative_sums:
+                cumulative_value = cumulative_sums[pair_key]
+                if cumulative_value['valid']:
+                    print(f"Cumulative value for {pair_key}: {col_name1} = {cumulative_value['cumulative1']}, {col_name2} = {cumulative_value['cumulative2']}")
+                else:
+                    print(f"Cumulative value for {pair_key}: Invalid (No rows where both columns have values)")
+    print("===============================================================")
 # Close the connection
 conn.close()
