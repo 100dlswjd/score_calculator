@@ -1,7 +1,9 @@
 import db.db_tool as db_tool
+import ctypes
 
 from PySide6.QtWidgets import QApplication, QMainWindow
-from PySide6.QtGui import QClipboard
+from PySide6.QtGui import QClipboard, QMouseEvent
+from PySide6.QtCore import Qt, Slot
 
 from ui.scoreboard_form import Ui_Scoreboard
 
@@ -14,9 +16,17 @@ class ScoreBoard(QMainWindow, Ui_Scoreboard):
         super().__init__()
         self.setupUi(self)        
         self.combobox_setting()
+        ctypes.windll.shell32.SetCurrentProcessExplicitAppUserModelID("scoreboard")
+        # 윈도우 타이틀 바 없애기 | 배경 투명
+        self.setWindowFlag(Qt.FramelessWindowHint)
+        
+        # 투명설정
+        self.setAttribute(Qt.WA_TranslucentBackground)
+        
         self.refresh_members()
         
         self.pushButton_add_member.clicked.connect(self.add_member)
+        self.pushButton_close.clicked.connect(self.close)
 
     def combobox_setting(self):
         import json
@@ -45,12 +55,10 @@ class ScoreBoard(QMainWindow, Ui_Scoreboard):
         self.verticalLayout.addWidget(self.score_control_widget)
         self.score_control_widget.pushButton_insert_score.clicked.connect(self.btn_insert_score_click)
         self.score_control_widget.pushButton_get_score.clicked.connect(self.btn_get_score_click)
-        self.statusBar().showMessage("사용자 목록 갱신 완료")
         
-            
+    @Slot()
     def add_member(self):
         # 위젯 뛰우고 현재 메인 윈도우는 컨트롤 못하게 하기
-        self.statusBar().showMessage("사용자 추가 중")
         self.add_widget = AddWidget()        
         self.add_widget.setModal(True)
         self.add_widget.show()
@@ -80,16 +88,33 @@ class ScoreBoard(QMainWindow, Ui_Scoreboard):
             query += f", {data[1]}"
         query += ")"
         db_tool.insert(query)
-        self.statusBar().showMessage("점수 입력 완료")
         self.refresh_members()
         
     def btn_get_score_click(self):
-        print("get_score")
         site = self.comboBox_site.currentIndex() + 1
         # 클립보드 복사
         clipboard = QClipboard()
         clipboard.setText(db_tool.get_total_score(site) + db_tool.get_1_1_score(site))        
         self.refresh_members()
+        
+    @Slot()
+    def mousePressEvent(self, event: QMouseEvent) -> None:        
+        try:
+            self.dragPos = event.globalPosition().toPoint()            
+        except:
+            pass
+        
+    @Slot()
+    def mouseMoveEvent(self, event: QMouseEvent) -> None:
+        try:
+            self.move(self.pos() + event.globalPosition().toPoint() - self.dragPos)
+            self.dragPos = event.globalPosition().toPoint()
+        except:
+            pass
+        
+    @Slot()
+    def mouseReleaseEvent(self, event: QMouseEvent) -> None:
+        self.dragPos = None
         
     def closeEvent(self, event):
         db_tool.close()

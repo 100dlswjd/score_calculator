@@ -19,7 +19,25 @@ class ScoreWidget(QWidget, Ui_score_form):
         self.participate = False
         
         # 체크박스 이미지 변경
-        self.checkbox_styleSheet = "QCheckBox::indicator:checked {image: url(" + resource_path("check_icon.png") + ");} QCheckBox::indicator:unchecked {image: url(" + resource_path("x_icon.png") + ");}" 
+        self.checkbox_styleSheet = """
+        QCheckBox{
+border:0px solid #000000;
+border-radius:2px;
+}
+
+QCheckBox:unchecked{
+color:#689aaf;
+}
+
+QCheckBox:checked{
+color:#172327;
+}
+
+QCheckBox:hover{
+background-color:#9ad1d6;
+}
+"""
+        self.checkbox_styleSheet =self.checkbox_styleSheet + "QCheckBox::indicator:checked {image: url(" + resource_path("check_icon.png") + ");} QCheckBox::indicator:unchecked {image: url(" + resource_path("x_icon.png") + ");}" 
         
         self.checkBox_name.setStyleSheet(self.checkbox_styleSheet)
         
