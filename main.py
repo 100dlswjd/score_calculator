@@ -2,6 +2,7 @@ import db.db_tool as db_tool
 import ctypes
 import os
 import json
+import datetime
 
 from PySide6.QtWidgets import QApplication, QMainWindow
 from PySide6.QtGui import QClipboard, QMouseEvent
@@ -94,11 +95,13 @@ class ScoreBoard(QMainWindow, Ui_Scoreboard):
             except:
                 pass
         
+        now = datetime.datetime.now()
+        
         query = f"insert into score (SITE, REG_DATE"
         for data in insert_data:
             query += f", {data[0]}"
         query += ") values ("
-        query += f"{site}, datetime('now')"
+        query += f"{site}, datetime('{now}')"
         for data in insert_data:
             query += f", {data[1]}"
         query += ")"
