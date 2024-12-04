@@ -13,6 +13,7 @@ class AddWidget(QDialog, Ui_add_form):
         self.setWindowTitle("사용자 추가")
         self.setWindowFlag(Qt.FramelessWindowHint)
         self.setAttribute(Qt.WA_TranslucentBackground)
+        self.lineEdit.returnPressed.connect(self.pushButton_add.click)
         self.pushButton_add.clicked.connect(self.add_member)
         self.pushButton.clicked.connect(self.close)
         
