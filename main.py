@@ -2,10 +2,11 @@ import db.db_tool as db_tool
 import ctypes
 import os
 import json
+import sys
 import datetime
 
 from PySide6.QtWidgets import QApplication, QMainWindow
-from PySide6.QtGui import QClipboard, QMouseEvent
+from PySide6.QtGui import QClipboard, QMouseEvent, QPixmap
 from PySide6.QtCore import Qt, Slot
 
 from ui.scoreboard_form import Ui_Scoreboard
@@ -27,6 +28,14 @@ if not os.path.exists(config_path):
         f.write(json.dumps(example_data,indent=4))
         f.close()
         
+
+def resource_path(relative_path):
+    try:
+        base_path = sys._MEIPASS
+    except Exception:
+        base_path = os.path.abspath(".")
+    return os.path.join(base_path, relative_path).replace("\\","/")
+
 class ScoreBoard(QMainWindow, Ui_Scoreboard):
     def __init__(self):
         super().__init__()
@@ -46,7 +55,7 @@ class ScoreBoard(QMainWindow, Ui_Scoreboard):
 
     def combobox_setting(self):
         import json
-        with open(config_path, 'r') as f:
+        with open(config_path, 'r', encoding='utf-8') as f:
             data = json.load(f)
             for key in data.keys():
                 self.comboBox_site.addItem(data[key])
@@ -139,10 +148,9 @@ class ScoreBoard(QMainWindow, Ui_Scoreboard):
         return super().closeEvent(event)
         
 if __name__ == "__main__":
-    print("")
-    print("")
-    print("")
+    icon_path = resource_path("score_board.png")
     app = QApplication([])
+    app.setWindowIcon(QPixmap(icon_path))
     window = ScoreBoard()
     window.show()
     app.exec()
