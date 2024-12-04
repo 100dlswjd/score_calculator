@@ -1,5 +1,7 @@
 import db.db_tool as db_tool
 import ctypes
+import os
+import json
 
 from PySide6.QtWidgets import QApplication, QMainWindow
 from PySide6.QtGui import QClipboard, QMouseEvent
@@ -11,6 +13,19 @@ from score_widget import ScoreWidget
 from add_widget import AddWidget
 from score_control_widget import ScoreControlWidget
 
+config_path = os.path.join(os.path.expandvars("%userprofile%"),"documents","ddatg","scoreboard","config.json")
+
+example_data ={
+  "1": "1",
+  "2": "2",
+  "3": "3"
+}
+# 파일이 없으면 코드 실행
+if not os.path.exists(config_path):
+    with open(config_path,"w") as f:
+        f.write(json.dumps(example_data,indent=4))
+        f.close()
+        
 class ScoreBoard(QMainWindow, Ui_Scoreboard):
     def __init__(self):
         super().__init__()
@@ -30,7 +45,7 @@ class ScoreBoard(QMainWindow, Ui_Scoreboard):
 
     def combobox_setting(self):
         import json
-        with open('config.json', 'r') as f:
+        with open(config_path, 'r') as f:
             data = json.load(f)
             for key in data.keys():
                 self.comboBox_site.addItem(data[key])

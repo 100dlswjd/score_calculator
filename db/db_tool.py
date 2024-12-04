@@ -1,9 +1,15 @@
 import sqlite3
+import os
 from itertools import combinations
+
+# 폴더가 없으면 생성
+os.makedirs(os.path.join(os.path.expandvars("%userprofile%"),"documents","ddatg","scoreboard"), exist_ok=True)
 
 table_name = "score"
 
-conn = sqlite3.connect(f'{table_name}.db')
+db_path = os.path.join(os.path.expandvars("%userprofile%"),"documents","ddatg","scoreboard",f"{table_name}.db")
+
+conn = sqlite3.connect(db_path)
 cur = conn.cursor()
 
 try:
