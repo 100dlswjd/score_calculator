@@ -25,7 +25,7 @@ class Ui_Scoreboard(object):
             Scoreboard.setObjectName(u"Scoreboard")
         Scoreboard.resize(240, 79)
         Scoreboard.setMinimumSize(QSize(240, 0))
-        Scoreboard.setMaximumSize(QSize(5555, 16777215))
+        Scoreboard.setMaximumSize(QSize(240, 16777215))
         Scoreboard.setStyleSheet(u"")
         self.centralwidget = QWidget(Scoreboard)
         self.centralwidget.setObjectName(u"centralwidget")
