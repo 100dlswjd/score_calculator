@@ -3,7 +3,7 @@
 ################################################################################
 ## Form generated from reading UI file 'scoreboard_form.ui'
 ##
-## Created by: Qt User Interface Compiler version 6.7.0
+## Created by: Qt User Interface Compiler version 6.6.2
 ##
 ## WARNING! All changes made in this file will be lost when recompiling UI file!
 ################################################################################
@@ -23,7 +23,7 @@ class Ui_Scoreboard(object):
     def setupUi(self, Scoreboard):
         if not Scoreboard.objectName():
             Scoreboard.setObjectName(u"Scoreboard")
-        Scoreboard.resize(240, 79)
+        Scoreboard.resize(240, 87)
         Scoreboard.setMinimumSize(QSize(240, 0))
         Scoreboard.setMaximumSize(QSize(240, 16777215))
         Scoreboard.setStyleSheet(u"")
@@ -95,8 +95,12 @@ class Ui_Scoreboard(object):
 
         self.verticalLayout.addWidget(self.label)
 
+        self.horizontalLayout_3 = QHBoxLayout()
+        self.horizontalLayout_3.setObjectName(u"horizontalLayout_3")
+        self.horizontalLayout_3.setContentsMargins(4, 4, 4, 4)
         self.comboBox_site = QComboBox(self.centralwidget)
         self.comboBox_site.setObjectName(u"comboBox_site")
+        self.comboBox_site.setMaximumSize(QSize(200, 16777215))
         self.comboBox_site.setStyleSheet(u"QComboBox{\n"
 "background-color:#F5F0CD;\n"
 "border:none;\n"
@@ -127,7 +131,10 @@ class Ui_Scoreboard(object):
 "color:#3d5682;\n"
 "}")
 
-        self.verticalLayout.addWidget(self.comboBox_site)
+        self.horizontalLayout_3.addWidget(self.comboBox_site)
+
+
+        self.verticalLayout.addLayout(self.horizontalLayout_3)
 
         self.horizontalLayout = QHBoxLayout()
         self.horizontalLayout.setObjectName(u"horizontalLayout")
@@ -173,6 +180,6 @@ class Ui_Scoreboard(object):
         self.label_title.setText(QCoreApplication.translate("Scoreboard", u"  \uc21c\uc704 \uc790\ub3d9 \uacc4\uc0b0\uae30", None))
         self.pushButton_close.setText(QCoreApplication.translate("Scoreboard", u"x", None))
         self.label.setText("")
-        self.pushButton_add_member.setText(QCoreApplication.translate("Scoreboard", u"\uc0ac\uc6a9\uc790 \ucd94\uac00", None))
+        self.pushButton_add_member.setText(QCoreApplication.translate("Scoreboard", u"  \uc0ac\uc6a9\uc790 \ucd94\uac00  ", None))
     # retranslateUi
 
