@@ -48,6 +48,13 @@ background-color:#9ad1d6;
         
         self.pushButton_p.clicked.connect(self.btn_p_click)
         self.pushButton_m.clicked.connect(self.btn_m_click)
+
+        self.pushButton_p.setAutoRepeat(True)
+        self.pushButton_p.setAutoRepeatInterval(10)
+
+        self.pushButton_m.setAutoRepeat(True)
+        self.pushButton_m.setAutoRepeatInterval(10)
+
         
     def set_name(self, name):
         self.checkBox_name.setText(name)
