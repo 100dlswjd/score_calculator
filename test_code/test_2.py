@@ -2,10 +2,10 @@ import sqlite3
 import os
 from itertools import combinations
 
-config_path = os.path.join(os.path.expandvars("%userprofile%"),"documents","ddatg","scoreboard","config.json")
+config_path = os.path.join(os.path.expandvars("%userprofile%"), "documents", "ddatg", "scoreboard", "config.json")
 
 table_name = "score"
-db_path = os.path.join(os.path.expandvars("%userprofile%"),"documents","ddatg","scoreboard",f"{table_name}.db")
+db_path = os.path.join(os.path.expandvars("%userprofile%"), "documents", "ddatg", "scoreboard", f"{table_name}.db")
 
 # Connect to your database
 conn = sqlite3.connect(db_path)
@@ -63,6 +63,8 @@ for col1, col2 in combinations(range(num_columns), 2):
 # Step 5: Print cumulative values for each valid pair, ensuring each pair appears under both columns
 res = ""
 printed_pairs = set()
+individual_win_rates = {name: {'wins': 0, 'total_games': 0} for name in column_names}  # Track wins and total games for each individual
+
 for col1 in range(num_columns):
     col_name1 = column_names[col1]
     res += f"=======  {col_name1}  =======\n"
@@ -77,14 +79,36 @@ for col1 in range(num_columns):
                     res += f"{col_name1} = {cumulative_value['cumulative1']} / {col_name2} = {cumulative_value['cumulative2']} (총 판수: {cumulative_value['total_games']}) "
                     if cumulative_value['cumulative1'] > cumulative_value['cumulative2']:
                         res += "승\n"
+                        individual_win_rates[col_name1]['wins'] += 1
                     elif cumulative_value['cumulative1'] < cumulative_value['cumulative2']:
                         res += "패\n"
+                        individual_win_rates[col_name2]['wins'] += 1
                     else:
                         res += "무\n"
+
+                    individual_win_rates[col_name1]['total_games'] += 1
+                    individual_win_rates[col_name2]['total_games'] += 1
                 else:
                     res += f"{col_name1}과 {col_name2}의 전적이 없음.\n"
                 printed_pairs.add(pair_key)
     res += "=====================\n"
+
+# Step 6: Calculate win rates and sort participants
+win_rates = []
+for name, data in individual_win_rates.items():
+    total_games = data['total_games']
+    if total_games > 0:
+        win_rate = (data['wins'] / total_games) * 100
+    else:
+        win_rate = 0
+    win_rates.append((name, win_rate))
+
+win_rates.sort(key=lambda x: x[1], reverse=True)
+
+# Step 7: Print the final win rate ranking
+res += "\n======= 최종 승률 순위 =======\n"
+for idx, (name, win_rate) in enumerate(win_rates, start=1):
+    res += f"{idx}. {name} - {win_rate:.1f}%\n"
 
 print(res)
 

@@ -1,5 +1,7 @@
 import sqlite3
 import os
+from collections import defaultdict
+from datetime import datetime
 
 config_path = os.path.join(os.path.expandvars("%userprofile%"), "documents", "ddatg", "scoreboard", "config.json")
 
@@ -19,7 +21,7 @@ for row in rows:
     names.append(row[1])
 names = names[3:]
 
-sql = "SELECT "
+sql = "SELECT REG_DATE, "
 for name in names:
     sql += f"{name}, "
 sql = sql[:-2] + f" FROM {table_name} where SITE = 1"
@@ -27,31 +29,31 @@ sql = sql[:-2] + f" FROM {table_name} where SITE = 1"
 cur.execute(sql)
 rows = cur.fetchall()
 
-cumulative_data = {}
+cumulative_data = defaultdict(lambda: defaultdict(lambda: { 'cumulative_values': [0 for _ in range(len(names))], 'count': 0 }))
 
+# Accumulate values by date and pattern
 for row in rows:
-    pattern = tuple(col is not None for col in row)
+    date = datetime.strptime(row[0], '%Y-%m-%d %H:%M:%S').date()
+    data_values = row[1:]
+    pattern = tuple(col is not None for col in data_values)
 
-    if pattern not in cumulative_data:
-        cumulative_data[pattern] = {
-            'cumulative_values': [0 for x in range(len(names))],  # Initialize with zeros for each data column
-            'count': 0  # Initialize counter to 0
-        }
-
-    cumulative_data[pattern]['count'] += 1
-    for i, value in enumerate(row):
+    cumulative_data[date][pattern]['count'] += 1
+    for i, value in enumerate(data_values):
         if value is not None:
-            cumulative_data[pattern]['cumulative_values'][i] += value
+            cumulative_data[date][pattern]['cumulative_values'][i] += value
 
+# Generate output
 res = ""
-for pattern, data in cumulative_data.items():
-    participant_names = [names[i] for i, value in enumerate(pattern) if value]
-    res += "-----\n"
-    res += f"{' / '.join(participant_names)} -> 총 전적: {data['count']} 판\n"
-    for i, value in enumerate(pattern):
-        if value:
-            res += f"{names[i]}: {data['cumulative_values'][i]}\n"
-    res += "-----\n"
+for date, patterns in cumulative_data.items():
+    formatted_date = date.strftime('%y.%m.%d (%a)')
+    res += f"{formatted_date} Roll 결과\n"
+    for pattern, data in patterns.items():
+        participant_names = [names[i] for i, value in enumerate(pattern) if value]
+        res += "\n"
+        res += f"-- {', '.join(participant_names)} --\n"
+        cumulative_scores = [f"{names[i]} {data['cumulative_values'][i]} 점" for i, value in enumerate(pattern) if value]
+        res += f"{', '.join(cumulative_scores)}\n"
+    res += "------------------------------\n"
 
 print(res)
 conn.close()

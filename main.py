@@ -119,9 +119,10 @@ class ScoreBoard(QMainWindow, Ui_Scoreboard):
         
     def btn_get_score_click(self):
         site = self.comboBox_site.currentIndex() + 1
+        name = self.comboBox_site.currentText()
         # 클립보드 복사
         clipboard = QClipboard()
-        clipboard.setText(db_tool.get_total_score(site) + db_tool.get_1_1_score(site))        
+        clipboard.setText(db_tool.get_total_score(site, name) + db_tool.get_1_1_score(site, name))        
         self.refresh_members()
         
     @Slot()
