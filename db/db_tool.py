@@ -54,14 +54,9 @@ def get_total_score(site):
 
     res = ""
     for pattern, data in cumulative_data.items():
-        # print(f"Pattern {pattern}:")
-        # print(f"  Count: {data['count']}")
-        # print(f"  Cumulative values: {data['cumulative_values']}")
-        # for i, value in enumerate(pattern):
-        #     if value:
-        #         res += f"{names[i]}: {data['cumulative_values'][i]}\n"
-        # pattern에 해당하는 컬럼명 가져와서 데이터 출력 False라면 출력 안함
+        participant_names = [names[i] for i, value in enumerate(pattern) if value]
         res += "-----\n"
+        res += f"{' / '.join(participant_names)} -> 총 전적: {data['count']} 판\n"
         for i, value in enumerate(pattern):
             if value:
                 res += f"{names[i]}: {data['cumulative_values'][i]}\n"
@@ -92,8 +87,8 @@ def get_1_1_score(site):
         col_name2 = column_names[col2]
         pair_key = f"{col_name1}_{col_name2}"
         reverse_pair_key = f"{col_name2}_{col_name1}"
-        
-        cumulative_sums[pair_key] = {'cumulative1': 0, 'cumulative2': 0, 'valid': False}
+
+        cumulative_sums[pair_key] = {'cumulative1': 0, 'cumulative2': 0, 'valid': False, 'total_games': 0}
 
         # Step 4: Accumulate values for the current pair if both are non-null
         for row in rows:
@@ -102,13 +97,15 @@ def get_1_1_score(site):
             if value1 is not None and value2 is not None:
                 cumulative_sums[pair_key]['cumulative1'] += value1
                 cumulative_sums[pair_key]['cumulative2'] += value2
+                cumulative_sums[pair_key]['total_games'] += 1
                 cumulative_sums[pair_key]['valid'] = True
 
         # Ensure the reverse pair also has the same values for consistent output
         cumulative_sums[reverse_pair_key] = {
             'cumulative1': cumulative_sums[pair_key]['cumulative2'],
             'cumulative2': cumulative_sums[pair_key]['cumulative1'],
-            'valid': cumulative_sums[pair_key]['valid']
+            'valid': cumulative_sums[pair_key]['valid'],
+            'total_games': cumulative_sums[pair_key]['total_games']
         }
 
     # Step 5: Print cumulative values for each valid pair, ensuring each pair appears under both columns
@@ -116,7 +113,7 @@ def get_1_1_score(site):
     printed_pairs = set()
     for col1 in range(num_columns):
         col_name1 = column_names[col1]
-        res += f"=====  {col_name1}  =====\n"
+        res += f"=======  {col_name1}  =======\n"
         for col2 in range(num_columns):
             if col1 != col2:
                 col_name2 = column_names[col2]
@@ -125,18 +122,17 @@ def get_1_1_score(site):
                 if pair_key in cumulative_sums and pair_key not in printed_pairs:
                     cumulative_value = cumulative_sums[pair_key]
                     if cumulative_value['valid']:
-                        res += f"{col_name1} : {cumulative_value['cumulative1']} 포인트 / {col_name2} : {cumulative_value['cumulative2']}포인트 "
+                        res += f"{col_name1} = {cumulative_value['cumulative1']} / {col_name2} = {cumulative_value['cumulative2']} (총 판수: {cumulative_value['total_games']}) "
                         if cumulative_value['cumulative1'] > cumulative_value['cumulative2']:
-                            res += " 승\n"
+                            res += "승\n"
                         elif cumulative_value['cumulative1'] < cumulative_value['cumulative2']:
-                            res += " 패\n"
+                            res += "패\n"
                         else:
-                            res += " 무\n"
+                            res += "무\n"
                     else:
-                        # print(f"{col_name1}과 {col_name2}의 전적이 없음.")
-                        res += f"{col_name1} vs {col_name2}의 전적이 없음.\n"
+                        res += f"{col_name1}과 {col_name2}의 전적이 없음.\n"
                     printed_pairs.add(pair_key)
-        res += "==========\n"
+        res += "=====================\n"
         
     return res
         

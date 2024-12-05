@@ -1,11 +1,19 @@
 import sqlite3
+import os
 
-conn = sqlite3.connect('test.db')
+config_path = os.path.join(os.path.expandvars("%userprofile%"), "documents", "ddatg", "scoreboard", "config.json")
+
+table_name = "score"
+db_path = os.path.join(os.path.expandvars("%userprofile%"), "documents", "ddatg", "scoreboard", f"{table_name}.db")
+
+# Connect to your database
+conn = sqlite3.connect(db_path)
 cur = conn.cursor()
 
 # 컬럼이름 가져와서 sql문으로 만들기
-cur.execute("PRAGMA table_info(test)")
+cur.execute(f"PRAGMA table_info({table_name})")
 rows = cur.fetchall()
+
 names = []
 for row in rows:
     names.append(row[1])
@@ -14,7 +22,7 @@ names = names[3:]
 sql = "SELECT "
 for name in names:
     sql += f"{name}, "
-sql = sql[:-2] + " FROM test"
+sql = sql[:-2] + f" FROM {table_name} where SITE = 1"
 
 cur.execute(sql)
 rows = cur.fetchall()
@@ -23,7 +31,7 @@ cumulative_data = {}
 
 for row in rows:
     pattern = tuple(col is not None for col in row)
-    
+
     if pattern not in cumulative_data:
         cumulative_data[pattern] = {
             'cumulative_values': [0 for x in range(len(names))],  # Initialize with zeros for each data column
@@ -35,9 +43,15 @@ for row in rows:
         if value is not None:
             cumulative_data[pattern]['cumulative_values'][i] += value
 
+res = ""
 for pattern, data in cumulative_data.items():
-    print(f"Pattern {pattern}:")
-    print(f"  Count: {data['count']}")
-    print(f"  Cumulative values: {data['cumulative_values']}")
+    participant_names = [names[i] for i, value in enumerate(pattern) if value]
+    res += "-----\n"
+    res += f"{' / '.join(participant_names)} -> 총 전적: {data['count']} 판\n"
+    for i, value in enumerate(pattern):
+        if value:
+            res += f"{names[i]}: {data['cumulative_values'][i]}\n"
+    res += "-----\n"
 
+print(res)
 conn.close()
