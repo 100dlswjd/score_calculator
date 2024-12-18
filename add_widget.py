@@ -4,7 +4,8 @@ from PySide6.QtGui import QMouseEvent
 
 from ui.add_widget_form import Ui_add_form
 
-import db.db_tool as db_tool
+# import db.db_tool as db_tool
+# import db.db_tool_server as db_tool
 
 class AddWidget(QDialog, Ui_add_form):
     def __init__(self):
@@ -16,6 +17,9 @@ class AddWidget(QDialog, Ui_add_form):
         self.lineEdit.returnPressed.connect(self.pushButton_add.click)
         self.pushButton_add.clicked.connect(self.add_member)
         self.pushButton.clicked.connect(self.close)
+        
+    def set_db_tool(self, db_tool):
+        self.db_tool = db_tool
         
     @Slot()
     def mousePressEvent(self, event: QMouseEvent) -> None:        
@@ -38,7 +42,7 @@ class AddWidget(QDialog, Ui_add_form):
         
     def add_member(self):
         name = self.lineEdit.text()
-        db_tool.add_member(name)
+        self.db_tool.add_member(name)
         self.close()
         
 if __name__ == "__main__":
