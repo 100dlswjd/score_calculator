@@ -3,7 +3,7 @@
 ################################################################################
 ## Form generated from reading UI file 'scoreboard_form.ui'
 ##
-## Created by: Qt User Interface Compiler version 6.6.2
+## Created by: Qt User Interface Compiler version 6.7.0
 ##
 ## WARNING! All changes made in this file will be lost when recompiling UI file!
 ################################################################################
@@ -145,6 +145,7 @@ class Ui_Scoreboard(object):
 
         self.pushButton_add_member = QPushButton(self.centralwidget)
         self.pushButton_add_member.setObjectName(u"pushButton_add_member")
+        self.pushButton_add_member.setEnabled(True)
         self.pushButton_add_member.setMinimumSize(QSize(0, 24))
         self.pushButton_add_member.setStyleSheet(u"QPushButton{\n"
 "background-color:#c1ffff;\n"
@@ -161,6 +162,11 @@ class Ui_Scoreboard(object):
 "QPushButton:pressed{\n"
 "background-color:#7ba3a3;\n"
 "border:2px solid #d0ccc7;\n"
+"}\n"
+"\n"
+"QPushButton:disabled{\n"
+"background-color:#759a9a;;\n"
+"border-color:#b5b1ad;\n"
 "}")
 
         self.horizontalLayout.addWidget(self.pushButton_add_member)

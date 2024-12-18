@@ -177,6 +177,11 @@ QPushButton:pressed{
 background-color:#7ba3a3;
 border:2px solid #d0ccc7;
 color:#FADA7A;
+}
+
+QPushButton:disabled{
+background-color:#759a9a;;
+border-color:#b5b1ad;
 }</string>
         </property>
         <property name="text">

@@ -102,6 +102,11 @@ class Ui_score_control_form(object):
 "background-color:#7ba3a3;\n"
 "border:2px solid #d0ccc7;\n"
 "color:#FADA7A;\n"
+"}\n"
+"\n"
+"QPushButton:disabled{\n"
+"background-color:#759a9a;;\n"
+"border-color:#b5b1ad;\n"
 "}")
 
         self.horizontalLayout_2.addWidget(self.pushButton_insert_score)

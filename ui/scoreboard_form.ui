@@ -231,6 +231,9 @@ color:#3d5682;
       </item>
       <item>
        <widget class="QPushButton" name="pushButton_add_member">
+        <property name="enabled">
+         <bool>true</bool>
+        </property>
         <property name="minimumSize">
          <size>
           <width>0</width>
@@ -253,6 +256,11 @@ border:2px solid #e2ddd8;
 QPushButton:pressed{
 background-color:#7ba3a3;
 border:2px solid #d0ccc7;
+}
+
+QPushButton:disabled{
+background-color:#759a9a;;
+border-color:#b5b1ad;
 }</string>
         </property>
         <property name="text">
